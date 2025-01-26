@@ -1,0 +1,15 @@
+/* styles.css */
+.text-animation-infinite-scroll {
+    white-space: nowrap;
+    animation: infinite-scroll 20s linear infinite;
+  }
+  
+  @keyframes infinite-scroll {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
