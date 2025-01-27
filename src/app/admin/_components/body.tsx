@@ -15,10 +15,10 @@ export default function Body() {
   return (
     <div>
       {food?.map((food) => (
-        <div key={food._id} className="flex ">
-          <img className="w-[200px] h-[200px]" src={food.image} alt="food" />
+        <div key={food._id} className="border-[2px] border-gray-500 rounded-xl">
+          <img className="w-[270px] h-[241px]" src={food.image} alt="food" />
           <h1>{food.foodName}</h1>
-          <h1>{food.price}</h1>
+          <h1>{food.price}$</h1>
           <h1>{food.ingerdients}</h1>
           <h1>{food.category}</h1>
         </div>
