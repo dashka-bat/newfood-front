@@ -70,7 +70,6 @@ export default function AddOneFood() {
     const fetchData = async () => {
       const res = await fetch(`http://localhost:3004/food`);
       const data = await res.json();
-      console.log(data);
       setOneFood([
         ...oneFood,
         data.foodName,

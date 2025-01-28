@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { AddCategory } from "./addCategory";
+import Link from "next/link";
 type category = {
   categoryName: string;
   _id: string;
@@ -30,11 +31,13 @@ export default function Category(setModalOpen: any) {
     };
     fetchData();
   }, []);
-  console.log(category);
   return (
     <div>
       {category?.map((foodcategory) => (
-        <Badge key={foodcategory._id}>{foodcategory.categoryName}</Badge>
+        <Link href={`/admin/menu/${foodcategory._id}`} key={foodcategory._id}>
+          {" "}
+          <Badge key={foodcategory._id}>{foodcategory.categoryName}</Badge>
+        </Link>
       ))}
       <div>
         <AddCategory
