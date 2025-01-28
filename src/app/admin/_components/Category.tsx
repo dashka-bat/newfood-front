@@ -36,7 +36,12 @@ export default function Category(setModalOpen: any) {
       {category?.map((foodcategory) => (
         <Link href={`/admin/menu/${foodcategory._id}`} key={foodcategory._id}>
           {" "}
-          <Badge key={foodcategory._id}>{foodcategory.categoryName}</Badge>
+          <Badge
+            className=" hover:bg-white hover:text-black"
+            key={foodcategory._id}
+          >
+            {foodcategory.categoryName}
+          </Badge>
         </Link>
       ))}
       <div>

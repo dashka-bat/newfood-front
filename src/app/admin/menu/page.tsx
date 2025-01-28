@@ -21,7 +21,10 @@ export default function Menu() {
 
   return (
     <div>
-      <Category setModalOpen={setModalOpen} />
+      <div className="bg-white h-[176px] w-screen mt-12 rounded-xl mb-8">
+        <Category setModalOpen={setModalOpen} />
+      </div>
+
       <div>
         {/* <button
           className="bg-red-500 rounded-full w-[36px] h-[36px] ml-3"
@@ -30,7 +33,7 @@ export default function Menu() {
           +
         </button> */}
         <Body />
-        <AddOneFood />
+        {/* <AddOneFood /> */}
       </div>
     </div>
   );

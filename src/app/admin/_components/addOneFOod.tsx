@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { foodType } from "@/app/_components/types";
 
-export default function AddOneFood() {
+export default function AddOneFood(setRender: any) {
   const [image, setImage] = useState("");
   const [oneFood, setOneFood] = useState<foodType[]>([]);
   const [foodname, setFoodname] = useState("");
@@ -65,6 +65,7 @@ export default function AddOneFood() {
         category: category,
       }),
     });
+    setRender(false);
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -85,7 +86,16 @@ export default function AddOneFood() {
     <div>
       <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>Create project</CardTitle>
+          <div className="flex justify-between mr-3 ml-3">
+            <CardTitle>Create project</CardTitle>
+            {/* <Button
+              onClick={() => setRender(false)}
+              className="w-[30px] h-[30px]"
+            >
+              X
+            </Button> */}
+          </div>
+
           <CardDescription>
             Deploy your new project in one-click.
           </CardDescription>
