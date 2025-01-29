@@ -36,7 +36,7 @@ export default function Home() {
     };
     fetchData();
   }, []);
-
+  console.log(oneFood);
   return (
     <div>
       <Header />
@@ -69,8 +69,8 @@ export default function Home() {
                   {" "}
                   <img
                     className="w-[230px] h-[150px]"
-                    src={food.image}
-                    alt=""
+                    src={food.image || null}
+                    alt="food"
                   />
                 </div>
                 <div>{food.ingerdients}</div>

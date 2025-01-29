@@ -11,6 +11,7 @@ type category = {
 export default function Category(setModalOpen: any) {
   const [category, setCategory] = useState<category[]>([]);
   const [submit, setSubmit] = useState("");
+
   const addCategory = async () => {
     const response = await fetch("http://localhost:3004/food-category", {
       method: "POST",
@@ -22,6 +23,7 @@ export default function Category(setModalOpen: any) {
     const data = await response.json();
     setCategory([...category, data.foodname]);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("http://localhost:3004/food-category");
@@ -33,12 +35,22 @@ export default function Category(setModalOpen: any) {
   }, []);
   return (
     <div>
+      <Link href={`/admin/menu`}>
+        <Badge>all dishes</Badge>
+      </Link>
+
       {category?.map((foodcategory) => (
-        <Link href={`/admin/menu/${foodcategory._id}`} key={foodcategory._id}>
-          {" "}
+        <Link
+          href={`/admin/menu?category=${foodcategory._id}`}
+          key={foodcategory._id}
+        >
           <Badge
             className=" hover:bg-white hover:text-black"
             key={foodcategory._id}
+            // onClick={() => {
+            //   const searchParams = new URLSearchParams();
+            //   searchParams.set("category", foodcategory._id);
+            // }}
           >
             {foodcategory.categoryName}
           </Badge>

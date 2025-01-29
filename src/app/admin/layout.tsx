@@ -33,7 +33,7 @@ export default function AdminLayout({
               </div>
             </Link>
 
-            <Link href={"http://localhost:3000/admin/menu"}>
+            <Link href={"http://localhost:3000/admin/menu?category="}>
               <div className="mt-10">
                 <Badge className="pt-2 pb-2 pl-3 pr-3 ">
                   <Microwave />

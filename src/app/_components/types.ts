@@ -7,7 +7,7 @@ export type foodType = {
   price: any;
   category: {
     categoryName: String;
-    id: string;
+    _id: string;
   };
   image: any;
   ingerdients: String;

@@ -3,7 +3,7 @@ import "./style.css";
 export function Footer() {
   return (
     <div>
-      <div className="bg-[#18181B] h-[755px] w-[200px]">
+      <div className="bg-[#18181B] h-[755px] w-screen]">
         <div className="bg-[#18181B] h-[60px] w-screen">
           <div className="bg-[#EF4444]">
             <div className="w-full h-[92px] bg-[#EF4444] overflow-hidden relative mt-[60px]">
@@ -20,24 +20,32 @@ export function Footer() {
             <Logo />
             <div>
               <div className="text-gray-500">NOMNOM</div>
-              <p>Home</p>
-              <p>Contact us</p>
-              <p>Delivery zone</p>
+              <div className="text-white">
+                <p>Home</p>
+                <p>Contact us</p>
+                <p>Delivery zone</p>
+              </div>
             </div>
             <div>
               <div className="text-gray-500"> MENU</div>
-              <p>Appetizers</p>
-              <p>Salads </p>
-              <p>Pizzas</p>
-              <p>Lunch favorites</p>
-              <p> Main dishes</p>
+              <div className="text-white">
+                {" "}
+                <p>Appetizers</p>
+                <p>Salads </p>
+                <p>Pizzas</p>
+                <p>Lunch favorites</p>
+                <p> Main dishes</p>
+              </div>
             </div>
             <div>
-              <p>Side dish </p>
-              <p>Brunch </p>
-              <p>Desserts</p>
-              <p> Beverages</p>
-              <p> Fish & Sea foods </p>
+              <div className="text-white mt-5">
+                {" "}
+                <p>Side dish </p>
+                <p>Brunch </p>
+                <p>Desserts</p>
+                <p> Beverages</p>
+                <p> Fish & Sea foods </p>
+              </div>
             </div>
             <div>
               <div className="text-gray-500"> FOLLOW US</div>

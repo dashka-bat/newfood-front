@@ -20,14 +20,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { foodType } from "@/app/_components/types";
+import { useSearchParams } from "next/navigation";
 
-export default function AddOneFood(setRender: any) {
+export default function AddOneFood() {
   const [image, setImage] = useState("");
   const [oneFood, setOneFood] = useState<foodType[]>([]);
   const [foodname, setFoodname] = useState("");
   const [price, setPrice] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [category, setCategory] = useState([]);
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       if (event.target.files && event.target.files.length > 0) {
@@ -51,6 +51,10 @@ export default function AddOneFood(setRender: any) {
       alert("Failed to upload image. Please try again.");
     }
   };
+
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
+
   const addFood = async () => {
     const response = await fetch("http://localhost:3004/food", {
       method: "POST",
@@ -62,11 +66,12 @@ export default function AddOneFood(setRender: any) {
         price: price,
         image: image,
         ingerdients: ingredients,
-        category: category,
+        category,
       }),
     });
-    setRender(false);
+    const data = await response.json();
   };
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(`http://localhost:3004/food`);
@@ -82,6 +87,7 @@ export default function AddOneFood(setRender: any) {
     };
     fetchData();
   }, []);
+
   return (
     <div>
       <Card className="w-[350px]">
@@ -134,7 +140,9 @@ export default function AddOneFood(setRender: any) {
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                {image && <img src={image} alt="food" />}
+                {image && (
+                  <img className="w-[240px] h-[200px]" src={image} alt="food" />
+                )}
                 <Label htmlFor="name">Name</Label>
                 <Input
                   onChange={handleUpload}
