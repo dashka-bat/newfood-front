@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function Body() {
   const [food, setFood] = useState<foodType[]>([]);
@@ -41,21 +42,25 @@ export default function Body() {
               {foods.category.categoryName}
             </div>
             <div className="flex gap-5" key={foods._id}>
-              <div className="w-[270px] h-[240px] border-[2px] border-red-500 border-dashed  rounded-xl flex flex-col items-center justify-center ml-5">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div>
-                      add new dish to
-                      <div>{foods.category.categoryName}</div>
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogTitle>Dialog Title</DialogTitle>
-                    <p>This is the content of the dialog.</p>
-                    <AddOneFood />
-                  </DialogContent>
-                </Dialog>
-              </div>
+              <Link href={`/admin/menu?category=${foods.category._id}`}>
+                {" "}
+                <div className="w-[270px] h-[240px] border-[2px] border-red-500 border-dashed  rounded-xl flex flex-col items-center justify-center ml-5">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div>
+                        add new dish to
+                        <div>{foods.category.categoryName}</div>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogTitle>Dialog Title</DialogTitle>
+                      <p>This is the content of the dialog.</p>
+                      <AddOneFood categoryid={foods.category._id} />
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </Link>
+
               <div>
                 <OneFood
                   setEditRender={setEditRender}
@@ -70,7 +75,7 @@ export default function Body() {
                 />
                 {/* <h1>{food.category}</h1> */}{" "}
                 <div className="absolute top-[-60px] left-[400px]">
-                  {editRender && <EditDish />}
+                  {editRender && <EditDish food={food} />}
                 </div>
               </div>
             </div>

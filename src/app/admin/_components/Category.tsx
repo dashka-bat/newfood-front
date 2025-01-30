@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { AddCategory } from "./addCategory";
 import Link from "next/link";
+import { useAuthFetch } from "@/app/_components/useFetchData";
 type category = {
   categoryName: string;
   _id: string;
@@ -23,7 +24,7 @@ export default function Category(setModalOpen: any) {
     const data = await response.json();
     setCategory([...category, data.foodname]);
   };
-
+  // const data: any = useAuthFetch(`food-category`);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("http://localhost:3004/food-category");

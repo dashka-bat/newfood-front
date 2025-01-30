@@ -9,11 +9,13 @@ import { useSearchParams } from "next/navigation";
 import Body from "./admin/_components/body";
 import Category from "./admin/_components/Category";
 import { Card } from "@/components/ui/card";
+import { useAuthFetch } from "./_components/useFetchData";
 export default function Home() {
   const [categories, setCategory] = useState<CategoryType[]>([]);
   const [oneFood, setOneFood] = useState<foodType[]>([]);
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
+  const data: any = useAuthFetch(`food-category`);
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(`http://localhost:3004/food-category`);
@@ -22,6 +24,7 @@ export default function Home() {
     };
     fetchData();
   }, []);
+  // const food: any = useAuthFetch(`food?category=${category}`);
   useEffect(() => {
     const fetchData = async () => {
       const endpoint = category ? `food?category=${category}` : "food";
@@ -33,18 +36,18 @@ export default function Home() {
     fetchData();
   }, [category]);
   console.log(oneFood);
-  // const addCategory = async () => {
-  //   const res = await fetch(`http://localhost:8000/food-category`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
+  const addCategory = async () => {
+    const res = await fetch(`http://localhost:8000/food-category`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-  //     body: JSON.stringify({ categories }),
-  //   });
-  //   const data = await res.json();
-  //   setCategory([...categories, data.foodname]);
-  // };
+      body: JSON.stringify({ categories }),
+    });
+    const data = await res.json();
+    setCategory([...categories, data.foodname]);
+  };
 
   return (
     <div>
@@ -57,7 +60,7 @@ export default function Home() {
       </div>
       <div className="flex justify-center gap-5 bg-gray-500 p-5">
         <Badge>all dishes</Badge>
-        {categories?.map((foodcategory) => (
+        {data?.map((foodcategory: any) => (
           <Badge
             className=" hover:bg-white hover:text-black"
             key={foodcategory._id}

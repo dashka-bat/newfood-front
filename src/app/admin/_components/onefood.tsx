@@ -42,6 +42,7 @@ export default function OneFood({
           </div>
 
           <div className="mr-5 ml-5">{item.ingerdients}</div>
+
           <button
             onClick={() => setEditRender(true)}
             className="bg-white absolute top-20 right-7 w-[40px] h-[40px] flex justify-center items-center rounded-2xl "

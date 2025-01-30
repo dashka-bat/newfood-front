@@ -22,7 +22,7 @@ import {
 import { foodType } from "@/app/_components/types";
 import { useSearchParams } from "next/navigation";
 
-export default function AddOneFood() {
+export default function AddOneFood(categoryid: any) {
   const [image, setImage] = useState("");
   const [oneFood, setOneFood] = useState<foodType[]>([]);
   const [foodname, setFoodname] = useState("");
@@ -52,44 +52,47 @@ export default function AddOneFood() {
       alert("Failed to upload image. Please try again.");
     }
   };
-
+  console.log(categoryid);
   // const searchParams = useSearchParams();
   // const category = searchParams.get("category");
 
   const addFood = async () => {
+    const food: any = {
+      foodName: foodname,
+      price: Number(price),
+      image,
+      ingredients,
+      category: categoryid,
+    };
     const response = await fetch("http://localhost:3004/food", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        foodName: foodname,
-        price: price,
-        image: image,
-        ingerdients: ingredients,
-        category: category,
-      }),
+      body: JSON.stringify(food),
     });
-    setCategory;
+    setFoodname("");
+    setImage("");
+    setIngredients("");
+    setPrice("");
   };
-  console.log();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("http://localhost:3004/food");
-      const data = await res.json();
-      setOneFood([
-        ...oneFood,
-        data.foodName,
-        data.price,
-        data.ingerdients,
-        data.image,
-        data.category,
-      ]);
-    };
-    fetchData();
-  }, []);
-
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await fetch("http://localhost:3004/food");
+  //     const data = await res.json();
+  //     setOneFood([
+  //       ...oneFood,
+  //       data.foodName,
+  //       data.price,
+  //       data.ingerdients,
+  //       data.image,
+  //       data.category,
+  //     ]);
+  //   };
+  //   fetchData();
+  // }, []);
+  console.log(oneFood);
   return (
     <div>
       <Card className="w-[350px]">
@@ -147,7 +150,7 @@ export default function AddOneFood() {
                 )}
                 <Label htmlFor="file">Name</Label>
                 <Input
-                  onChange={handleUpload}
+                  // onChange={handleUpload}
                   type="file"
                   accept="image/*"
                   id="file"
