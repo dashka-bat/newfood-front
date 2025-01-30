@@ -29,9 +29,7 @@ export default function OneFood({
 
   return (
     <div className="bg-white mb-5 border-[1px] rounded-xl h-fit">
-      <div className="text-[40px] ml-5">{item.categoryName}</div>
       <div className="flex gap-5">
-        <div className="w-[270px] h-[240px] border-[2px] border-red-500 border-dashed  rounded-xl flex flex-col items-center justify-center ml-5"></div>
         <Card className="w-[270px] mb-5 relative">
           <img
             className="w-[240px] h-[130px] rounded-xl ml-3 mt-2"

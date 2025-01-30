@@ -35,7 +35,7 @@ export default function Category(setModalOpen: any) {
   }, []);
   return (
     <div>
-      <Link href={`/admin/menu`}>
+      <Link href={`/admin/menu?category=`}>
         <Badge>all dishes</Badge>
       </Link>
 

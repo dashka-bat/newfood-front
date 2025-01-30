@@ -28,6 +28,7 @@ export default function AddOneFood() {
   const [foodname, setFoodname] = useState("");
   const [price, setPrice] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [category, setCategory] = useState<any[]>([]);
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       if (event.target.files && event.target.files.length > 0) {
@@ -52,8 +53,8 @@ export default function AddOneFood() {
     }
   };
 
-  const searchParams = useSearchParams();
-  const category = searchParams.get("category");
+  // const searchParams = useSearchParams();
+  // const category = searchParams.get("category");
 
   const addFood = async () => {
     const response = await fetch("http://localhost:3004/food", {
@@ -66,15 +67,16 @@ export default function AddOneFood() {
         price: price,
         image: image,
         ingerdients: ingredients,
-        category,
+        category: category,
       }),
     });
-    const data = await response.json();
+    setCategory;
   };
+  console.log();
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`http://localhost:3004/food`);
+      const res = await fetch("http://localhost:3004/food");
       const data = await res.json();
       setOneFood([
         ...oneFood,
@@ -143,11 +145,12 @@ export default function AddOneFood() {
                 {image && (
                   <img className="w-[240px] h-[200px]" src={image} alt="food" />
                 )}
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="file">Name</Label>
                 <Input
                   onChange={handleUpload}
                   type="file"
-                  id="name"
+                  accept="image/*"
+                  id="file"
                   placeholder="Name of your project"
                 />
               </div>

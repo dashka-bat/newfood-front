@@ -29,37 +29,50 @@ export default function Body() {
     };
     fetchData();
   }, [category]);
-  console.log(category);
+  console.log(food);
 
   return (
-    <div className="bg-gray-200">
-      <Dialog>
-        <DialogTrigger asChild>
-          <div>+ add new dish to</div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogTitle>Dialog Title</DialogTitle>
-          <p>This is the content of the dialog.</p>
-          <AddOneFood />
-        </DialogContent>
-      </Dialog>
+    <div className="bg-white">
       <div className="relative">
         {food?.map((foods) => (
           <div key={foods._id}>
-            <OneFood
-              setEditRender={setEditRender}
-              ingerdients={foods.ingerdients}
-              _id={foods._id}
-              categoryName={foods?.category?.categoryName}
-              category={foods?.category}
-              foodName={foods?.foodName}
-              price={foods?.price}
-              image={foods?.image || null}
-              categoryid={foods?.category?._id || null}
-            />
-            {/* <h1>{food.category}</h1> */}{" "}
-            <div className="absolute top-[-60px] left-[400px]">
-              {editRender && <EditDish />}
+            {" "}
+            <div className="text-[40px] ml-5">
+              {foods.category.categoryName}
+            </div>
+            <div className="flex gap-5" key={foods._id}>
+              <div className="w-[270px] h-[240px] border-[2px] border-red-500 border-dashed  rounded-xl flex flex-col items-center justify-center ml-5">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div>
+                      add new dish to
+                      <div>{foods.category.categoryName}</div>
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogTitle>Dialog Title</DialogTitle>
+                    <p>This is the content of the dialog.</p>
+                    <AddOneFood />
+                  </DialogContent>
+                </Dialog>
+              </div>
+              <div>
+                <OneFood
+                  setEditRender={setEditRender}
+                  ingerdients={foods.ingerdients}
+                  _id={foods._id}
+                  categoryName={foods?.category?.categoryName}
+                  category={foods?.category}
+                  foodName={foods?.foodName}
+                  price={foods?.price}
+                  image={foods?.image || null}
+                  categoryid={foods?.category?._id || null}
+                />
+                {/* <h1>{food.category}</h1> */}{" "}
+                <div className="absolute top-[-60px] left-[400px]">
+                  {editRender && <EditDish />}
+                </div>
+              </div>
             </div>
           </div>
         ))}
