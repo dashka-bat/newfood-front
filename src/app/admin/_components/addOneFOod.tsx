@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,23 +12,18 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { foodType } from "@/app/_components/types";
-import { useSearchParams } from "next/navigation";
 
-export default function AddOneFood(categoryid: any) {
+interface Props {
+  categoryid: string;
+}
+
+export default function AddOneFood({ categoryid }: Props) {
   const [image, setImage] = useState("");
-  const [oneFood, setOneFood] = useState<foodType[]>([]);
   const [foodname, setFoodname] = useState("");
   const [price, setPrice] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [category, setCategory] = useState<any[]>([]);
+
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       if (event.target.files && event.target.files.length > 0) {
@@ -42,140 +37,105 @@ export default function AddOneFood(categoryid: any) {
           { method: "POST", body: data }
         );
 
-        if (!response.ok) throw new Error("Image upload failed");
+        if (!response.ok)
+          throw new Error("Зураг байршуулалт амжилтгүй боллоо.");
 
         const dataJson = await response.json();
         setImage(dataJson.secure_url);
       }
     } catch (error) {
-      console.error("Error uploading image:", error);
-      alert("Failed to upload image. Please try again.");
+      console.error("Зураг байршуулалт алдаа:", error);
+      alert("Зураг байршуулахад алдаа гарлаа. Дахин оролдоно уу.");
     }
   };
-  console.log(categoryid);
-  // const searchParams = useSearchParams();
-  // const category = searchParams.get("category");
 
   const addFood = async () => {
-    const food: any = {
-      foodName: foodname,
-      price: Number(price),
-      image,
-      ingredients,
-      category: categoryid,
-    };
-    const response = await fetch("http://localhost:3004/food", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(food),
-    });
-    setFoodname("");
-    setImage("");
-    setIngredients("");
-    setPrice("");
+    try {
+      const food = {
+        foodName: foodname,
+        price: Number(price),
+        image,
+        ingredients,
+        category: categoryid, // category зөв дамжуулалт
+      };
+
+      const response = await fetch("http://localhost:3004/food", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(food),
+      });
+
+      if (!response.ok) throw new Error("Хоол нэмэхэд алдаа гарлаа.");
+
+      alert("Хоол амжилттай нэмэгдлээ!");
+      setFoodname("");
+      setPrice("");
+      setIngredients("");
+      setImage("");
+    } catch (error) {
+      console.error("Хоол нэмэхэд алдаа:", error);
+      alert("Хоол нэмэхэд алдаа гарлаа. Дахин оролдоно уу.");
+    }
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const res = await fetch("http://localhost:3004/food");
-  //     const data = await res.json();
-  //     setOneFood([
-  //       ...oneFood,
-  //       data.foodName,
-  //       data.price,
-  //       data.ingerdients,
-  //       data.image,
-  //       data.category,
-  //     ]);
-  //   };
-  //   fetchData();
-  // }, []);
-  console.log(oneFood);
   return (
     <div>
       <Card className="w-[350px]">
         <CardHeader>
           <div className="flex justify-between mr-3 ml-3">
-            <CardTitle>Create project</CardTitle>
-            {/* <Button
-              onClick={() => setRender(false)}
-              className="w-[30px] h-[30px]"
-            >
-              X
-            </Button> */}
+            <CardTitle>Шинэ хоол нэмэх</CardTitle>
           </div>
-
-          <CardDescription>
-            Deploy your new project in one-click.
-          </CardDescription>
+          <CardDescription>Хоолны мэдээллийг оруулна уу.</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Food Name</Label>
+                <Label htmlFor="name">Хоолны нэр</Label>
                 <Input
-                  onChange={(e) => {
-                    setFoodname(e.target.value);
-                  }}
+                  value={foodname}
+                  onChange={(e) => setFoodname(e.target.value)}
                   id="name"
-                  placeholder="Name of your project"
+                  placeholder="Хоолны нэр"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Food price</Label>
+                <Label htmlFor="price">Хоолны үнэ</Label>
                 <Input
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                  }}
-                  id="name"
-                  placeholder="Name of your project"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  id="price"
+                  placeholder="Хоолны үнэ"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">ingredients</Label>
+                <Label htmlFor="ingredients">Орц</Label>
                 <Input
-                  onChange={(e) => {
-                    setIngredients(e.target.value);
-                  }}
-                  id="name"
-                  placeholder="Name of your project"
+                  value={ingredients}
+                  onChange={(e) => setIngredients(e.target.value)}
+                  id="ingredients"
+                  placeholder="Орц"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
                 {image && (
                   <img className="w-[240px] h-[200px]" src={image} alt="food" />
                 )}
-                <Label htmlFor="file">Name</Label>
+                <Label htmlFor="file">Зураг байршуулах</Label>
                 <Input
-                  // onChange={handleUpload}
+                  onChange={handleUpload}
                   type="file"
                   accept="image/*"
                   id="file"
-                  placeholder="Name of your project"
                 />
               </div>
-              {/* <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="framework">Framework</Label>
-                <Select>
-                  <SelectTrigger id="framework">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="next">Next.js</SelectItem>
-                    <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                    <SelectItem value="astro">Astro</SelectItem>
-                    <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div> */}
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button onClick={addFood}>Add Dish</Button>
+          <Button onClick={addFood}>Хоол нэмэх</Button>
         </CardFooter>
       </Card>
     </div>
