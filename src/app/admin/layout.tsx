@@ -2,13 +2,14 @@ import { Badge } from "@/components/ui/badge";
 import { Microwave } from "lucide-react";
 import { Car } from "lucide-react";
 import { Settings } from "lucide-react";
-// import {
-//   ClerkProvider,
-//   SignInButton,
-//   SignedIn,
-//   SignedOut,
-//   UserButton,
-// } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+
 import Link from "next/link";
 
 export default function AdminLayout({
@@ -55,18 +56,23 @@ export default function AdminLayout({
             </Badge>
           </div>
         </div>
-        {/* <div>
+        <div>
           {" "}
           <ClerkProvider>
             <SignedOut>
               <SignInButton />
+              <button>login</button>
             </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
+            <div>
+              <SignedIn>
+                <div>
+                  {" "}
+                  <UserButton /> {children}
+                </div>
+              </SignedIn>
+            </div>
           </ClerkProvider>
-        </div>{" "} */}
-        {children}
+        </div>{" "}
       </div>
     </div>
   );
