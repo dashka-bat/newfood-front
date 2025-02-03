@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { AddCategory } from "./addCategory";
+import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { useAuthFetch } from "@/app/_components/useFetchData";
 type category = {
@@ -10,14 +11,16 @@ type category = {
   _id: string;
 };
 export default function Category(setModalOpen: any) {
+  const { getToken } = useAuth();
   const [category, setCategory] = useState<category[]>([]);
   const [submit, setSubmit] = useState("");
 
   const addCategory = async () => {
+    const token = await getToken();
     const response = await fetch("http://localhost:3004/food-category", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        Token: token,
       },
       body: JSON.stringify({ categoryName: submit }),
     });

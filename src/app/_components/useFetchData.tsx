@@ -1,12 +1,15 @@
-"use client";
 import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
 
 export function useAuthFetch(path: string) {
-  const [data, setData] = useState([]);
+  const { getToken } = useAuth();
+  const [data, setData] = useState();
   async function getFetchData() {
-    fetch(`http://localhost:3004/${path}`, {
-      headers: { "Content-Type": "application/json" },
+    const token = await getToken();
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URLs}/${path}`, {
+      headers: {
+        Token: token,
+      },
     })
       .then((res) => res.json())
       .then((data) => setData(data));
@@ -14,5 +17,5 @@ export function useAuthFetch(path: string) {
   useEffect(() => {
     getFetchData();
   }, []);
-  return data;
+  return { isLoading: !data, data };
 }

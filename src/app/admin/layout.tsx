@@ -61,7 +61,6 @@ export default function AdminLayout({
           <ClerkProvider>
             <SignedOut>
               <SignInButton />
-              <button>login</button>
             </SignedOut>
             <div>
               <SignedIn>

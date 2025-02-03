@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { foodType } from "@/app/_components/types";
+import { Token } from "@clerk/nextjs/server";
 
 interface Props {
   categoryid: string;
@@ -48,21 +49,20 @@ export default function AddOneFood({ categoryid }: Props) {
       alert("Зураг байршуулахад алдаа гарлаа. Дахин оролдоно уу.");
     }
   };
-
   const addFood = async () => {
     try {
       const food = {
         foodName: foodname,
         price: Number(price),
         image,
-        ingredients,
+        ingredients: ingredients,
         category: categoryid, // category зөв дамжуулалт
       };
 
       const response = await fetch("http://localhost:3004/food", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          Token: token,
         },
         body: JSON.stringify(food),
       });

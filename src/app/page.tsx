@@ -101,7 +101,7 @@ export default function Home() {
   const [oneFood, setOneFood] = useState<foodType[]>([]);
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
-  const data: any = useAuthFetch(`food-category`);
+  // const data: any = useAuthFetch(`food-category`);
 
   // Fetch categories on mount
   useEffect(() => {
@@ -116,7 +116,7 @@ export default function Home() {
   // Fetch foods based on category (if any)
   useEffect(() => {
     const fetchData = async () => {
-      const endpoint = category ? `food?category=${category}` : "food"; // If category exists, fetch foods for that category, else fetch all foods
+      const endpoint = category ? `food?category=${category}` : "food";
       const res = await fetch(`http://localhost:3004/${endpoint}`);
       const data = await res.json();
       setOneFood(data);
@@ -144,7 +144,7 @@ export default function Home() {
         >
           All Dishes
         </Badge>
-        {data?.map((foodcategory: any) => (
+        {categories?.map((foodcategory: any) => (
           <Badge
             className="hover:bg-white hover:text-black"
             key={foodcategory._id}

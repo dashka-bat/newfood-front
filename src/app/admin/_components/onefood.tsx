@@ -72,24 +72,25 @@ export default function OneFood({
           throw new Error("Зураг байршуулалт амжилтгүй боллоо.");
 
         const dataJson = await response.json();
-        setImage(dataJson.secure_url);
+        setImage(dataJson.secure_url); // Шинэ зурагны URL-ийг хадгалах
       }
     } catch (error) {
       console.error("Зураг байршуулалт алдаа:", error);
       alert("Зураг байршуулахад алдаа гарлаа. Дахин оролдоно уу.");
     }
   };
+
   const EditFood = async () => {
     try {
       const food = {
         foodName: editFoodname,
         price: Number(editPrice),
-        image,
+        image: image, // Шинэ зурагны URL
         ingredients: editIngredients,
         category: categoryid, // category зөв дамжуулалт
       };
 
-      const response = await fetch("http://localhost:3004/food", {
+      const response = await fetch(`http://localhost:3004/food/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -97,20 +98,21 @@ export default function OneFood({
         body: JSON.stringify(food),
       });
 
-      if (!response.ok) throw new Error("error");
+      if (!response.ok) throw new Error("Хоол засахад алдаа гарлаа");
 
-      alert("Хоол амжилттай нэмэгдлээ!");
+      alert("Хоол амжилттай засагдлаа!");
       setFoodname("");
       setPrice("");
       setIngredients("");
-      setImage("");
+      setImage(""); // Зураг өөрчлөгдсөний дараа image хувийг цэвэрлэх
     } catch (error) {
       console.error("error:", error);
-      alert("Хоол edit алдаа гарлаа. Дахин оролдоно уу.");
+      alert("Хоол засахад алдаа гарлаа. Дахин оролдоно уу.");
     }
   };
+
   const DeleteFood = async () => {
-    const response = await fetch(`http://localhost:3004/food}}`, {
+    const response = await fetch(`http://localhost:3004/food/${_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -118,6 +120,8 @@ export default function OneFood({
     });
 
     if (!response.ok) throw new Error("error");
+
+    alert("Хоол амжилттай устгагдлаа!");
   };
 
   useEffect(() => {
